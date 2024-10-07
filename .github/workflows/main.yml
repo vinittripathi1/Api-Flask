@@ -64,6 +64,20 @@ jobs:
           timeout-minutes: 5
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-           
+          
+      - name: Set up kubectl for Kubernetes
+        uses: azure/setup-kubectl@v3
+        with:
+         version: 'latest'
+
+      - name: Set Up Minikube (Local Testing)
+        run: |
+         minikube start
+         kubectl config use-context minikube
+
+      - name: Deploy to Kubernetes
+        run: |
+         kubectl apply -f k8s/deployment.yml
+         kubectl apply -f k8s/service.yml     
 
       
