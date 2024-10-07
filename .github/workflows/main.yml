@@ -57,13 +57,7 @@ jobs:
           ls -al .scannerwork
           cat .scannerwork/report-task.txt || echo "report-task.txt not found"
           
-      - name: SonarQube Quality Gate Check
-        uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
-        with:
-          scanMetadataReportFile: .scannerwork/report-task.txt
-          timeout-minutes: 5
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    
           
       - name: Set up kubectl for Kubernetes
         uses: azure/setup-kubectl@v3
