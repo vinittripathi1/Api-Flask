@@ -1,4 +1,4 @@
-name: Python Application CI/CD
+name: Python Application AWS CI/CD
 
 on:
   push:
@@ -56,6 +56,14 @@ jobs:
         run: |
           ls -al .scannerwork
           cat .scannerwork/report-task.txt || echo "report-task.txt not found"
+
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master # Force to fail  step after specific time.
+        timeout-minutes: 5
+        env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
