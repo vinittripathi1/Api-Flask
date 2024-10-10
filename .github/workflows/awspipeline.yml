@@ -40,6 +40,7 @@ jobs:
         run: |
           docker push $DOCKER_IMAGE:${{ github.sha }}
           docker push $DOCKER_IMAGE:latest
+          
       # Run SonarQube scan
       - name: Official SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v3.0.0
