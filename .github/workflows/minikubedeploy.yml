@@ -51,6 +51,23 @@ jobs:
         run: |
          kubectl create deployment my-app --image=$DOCKER_IMAGE:latest
          kubectl expose deployment my-app --type=NodePort --port=8080
+
+      - name: Wait for Pod to be Ready
+        run: |
+         kubectl wait --for=condition=ready pod -l app=my-app --timeout=120s
+
+      - name: Get Pod Status
+        run: |
+          kubectl get pods
+
+      - name: Get Service Status
+        run: |
+         kubectl get svc
+
+      - name: Get Pod Logs
+        run: |
+         kubectl logs $(kubectl get pods -l app=my-app -o jsonpath='{.items[0].metadata.name}')
+
  
       - name: Get Minikube Service URL
         run: |
