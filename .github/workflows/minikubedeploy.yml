@@ -1,4 +1,4 @@
-name: Python Application CI/CD
+name: Python Application CI/CD with deploy to minikube
 
 on:
   push:
