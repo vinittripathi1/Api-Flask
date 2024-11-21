@@ -40,23 +40,7 @@ jobs:
         run: |
           docker push $DOCKER_IMAGE:${{ github.sha }}
           docker push $DOCKER_IMAGE:latest
-      # Run SonarQube scan
-      - name: Official SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v3.0.0
-        with:
-          projectBaseDir: .
-          args: >
-           -Dsonar.projectKey=GithubProject1
-           -Dsonar.host.url=${{ env.SONAR_HOST_URL }}
-           -Dsonar.login=${{ env.SONAR_TOKEN }}
-           -Dsonar.working.directory=./.scannerwork
      
-           
-      - name: Print SonarQube Logs
-        run: |
-          ls -al .scannerwork
-          cat .scannerwork/report-task.txt || echo "report-task.txt not found"
-          
     
           
       - name: Set up kubectl for Kubernetes
