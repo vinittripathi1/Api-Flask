@@ -39,7 +39,7 @@ jobs:
     - name: Push docker image
       run: |
        docker push $DOCKER_IMAGE:${github.sha}}
-       docker push $DOCKER_IMAG:latest
+       docker push $DOCKER_IMAGE:latest
        
        
       
