@@ -1,0 +1,43 @@
+name: CI/CD Python Application
+
+on:
+ push:
+ workflow_dispatch:
+
+jobs:
+ ci-cd:
+  runs-on: ubuntu-latest
+  env:
+   DOCKER_IMAGE: karthikamn/flask-api-python-app
+   SONAR_URL: ${{secrets.SONAR_URL}}
+   SONAR_TOKEN1: ${{secrets.SONAR_TOKEN1}}
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4.2.2
+    - name: Official SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v3.0.0
+      with:
+       projectBaseDir: .
+       args: >
+        -Dsonar.projectKey=my-projectkey
+        -Dsonar.host.url=${{env.SONAR_URL}}
+        -Dsonar.login=${{env.SONAR_TOKEN1}}
+        -Dsonar.working.directory=./.scannerwork
+    - name: Print Sonar Logs
+      run: |
+       ls -al .scannerwork
+       cat .scannerwork/report.task.txt||echo "report.task.txt not found"
+    - name: SonarQube Quality Gate Check  
+      uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
+      with:
+        scanMetadataReportFile: .scannerwork/report-task.txt
+        timeout-minutes: 5
+         SONAR_URL:${{secrets.SONAR_URL}}
+         SONAR_TOKEN1:${{secrets.SONAR_TOKEN1}}
+        
+          
+       
+       
+       
+        
+      
