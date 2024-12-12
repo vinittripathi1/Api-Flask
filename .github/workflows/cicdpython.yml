@@ -40,6 +40,22 @@ jobs:
       run: |
        docker push $DOCKER_IMAGE:${{github.sha}}
        docker push $DOCKER_IMAGE:latest
+    - name: Setup Kubectl for kubernetes
+      uses: azure/setup-kubectl@v3
+      with:
+       version: 'latest'
+    - name: Setup Minikube
+      run: |
+       minikube start
+       kubectl config use-context minikube
+    - name: Deploy to Kubernetes
+      run: |
+       kubectl apply  -f k8s/deployment.yml
+       kubectl apply -f k8s/service.yml
+      
+      
+      
+      
        
        
       
