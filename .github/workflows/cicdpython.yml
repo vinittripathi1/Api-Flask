@@ -32,6 +32,24 @@ jobs:
       with:
        username: ${{secrets.DOCKER_USERNAME1}}
        password: ${{secrets.DOCKER_PASSWORD1}}
+    - name: Wait for SonarQube Quality Gate status
+      id: quality_gate
+      run: |
+         echo "Checking quality gate status..."
+          
+          # Get the quality gate status from SonarQube
+          status=$(curl -s -u ${{ secrets.SONAR_TOKEN }} "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=your_project_key" | jq -r '.projectStatus.status')
+          
+          echo "SonarQube Quality Gate Status: $status"
+          
+          if [[ "$status" != "OK" ]]; then
+            echo "Quality gate failed!"
+            exit 1
+          fi
+
+      env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Build docker image
       run: |
        docker build -t $DOCKER_IMAGE:${{github.sha}} .
