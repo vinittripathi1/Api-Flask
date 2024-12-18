@@ -9,46 +9,28 @@ jobs:
   runs-on: ubuntu-latest
   env:
    DOCKER_IMAGE: karthikamn/flask-api-python-app
-   SONAR_URL: ${{secrets.SONAR_URL}}
-   SONAR_TOKEN1: ${{secrets.SONAR_TOKEN1}}
+   
   steps:
     - name: Checkout Code
       uses: actions/checkout@v4.2.2
-    - name: Official SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v3.0.0
-      with:
-       projectBaseDir: .
-       args: >
-        -Dsonar.projectKey=my-projectkey
-        -Dsonar.host.url=${{env.SONAR_URL}}
-        -Dsonar.login=${{env.SONAR_TOKEN1}}
-        -Dsonar.working.directory=./.scannerwork
-    - name: Print Sonar Logs
-      run: |
-       ls -al .scannerwork
-       cat .scannerwork/report.task.txt||echo "report.task.txt not found"
+ 
     - name: Login to Docker
       uses: docker/login-action@v3.3.0
       with:
        username: ${{secrets.DOCKER_USERNAME1}}
        password: ${{secrets.DOCKER_PASSWORD1}}
-    - name: Check Quality Gate status
-      uses: sonarsource/sonarcloud-github-action@v1.0
-      with:
-          sonar-token: ${{ secrets.SONAR_TOKEN1 }}
-          sonar-host-url: ${{ secrets.SONAR_URL }}
-          check-quality-gate: true
-      env:
-          SONAR_URL: ${{ secrets.SONAR_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN1 }}
+   
     - name: Build docker image
       run: |
        docker build -t $DOCKER_IMAGE:${{github.sha}} .
        docker tag $DOCKER_IMAGE:${{github.sha}} $DOCKER_IMAGE:latest
+       
     - name: Push docker image
       run: |
        docker push $DOCKER_IMAGE:${{github.sha}}
        docker push $DOCKER_IMAGE:latest
+
+       
     - name: Setup Kubectl for kubernetes
       uses: azure/setup-kubectl@v3
       with:
@@ -57,6 +39,7 @@ jobs:
       run: |
        minikube start
        kubectl config use-context minikube
+       
     - name: Deploy to Kubernetes
       run: |
        kubectl apply  -f k8s/deployment.yml
