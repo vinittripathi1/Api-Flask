@@ -1,0 +1,28 @@
+name: CI/CD with SonarQube Integration
+
+on:
+ push:
+  branches:
+   - master
+ workflow_dispatch:
+jobs:
+ cicd_with_sonarqube:
+  runs-on: ubuntu-latest
+  env:
+   SONAR_HOST_URL: ${{secrets.SONAR_URL_26}}
+   SONAR_TOKEN: ${{secrets.SONAR_TOKEN_26}}
+  steps:
+   - name: Checkout
+     uses: actions/checkout@v4.2.2
+   - name: Official SonarQube Scan
+     uses: SonarSource/sonarqube-scan-action@v5.0.0
+     with:
+       projectBaseDir: .
+       args: >
+        -Dsonar.projectKey= Github Project
+        -Dsonar.host.url= ${{env.SONAR_HOST_URL}}
+        -Dsonar.login= $${{env.SONAR_TOKEN}}
+        -Dsonar.working.directory= ./.scannerwork
+        
+       
+   
