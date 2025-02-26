@@ -19,10 +19,10 @@ jobs:
      with:
        projectBaseDir: .
        args: >
-        -Dsonar.projectKey= Github Project
-        -Dsonar.host.url= ${{env.SONAR_HOST_URL}}
-        -Dsonar.login= $${{env.SONAR_TOKEN}}
-        -Dsonar.working.directory= ./.scannerwork
+        -Dsonar.projectKey=GithubProject
+        -Dsonar.host.url=${{env.SONAR_HOST_URL}}
+        -Dsonar.login=${{env.SONAR_TOKEN}}
+        -Dsonar.working.directory=./.scannerwork
         
        
    
