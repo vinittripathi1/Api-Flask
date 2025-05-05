@@ -12,7 +12,7 @@ jobs:
   env:
    docker_username: ${{secrets.DOCKERUSERNAME}}
    docker_password: ${{secrets.DOCKERPASSWORD}}
-   docker_image: karthikamn/webapp:v1.0
+   docker_image: karthikamn/flask-api-python-app
   steps:
    - name: Checkout
      uses: actions/checkout@v4.2.2
