@@ -12,7 +12,7 @@ jobs:
   env:
    docker_username: ${{secrets.DOCKERUSERNAME}}
    docker_password: ${{secrets.DOCKERPASSWORD}}
-   docker_image: karthikamn/flask-api-python-app
+   DOCKER_IMAGE: karthikamn/flask-api-python-app
   steps:
    - name: Checkout
      uses: actions/checkout@v4.2.2
@@ -23,5 +23,5 @@ jobs:
       password: ${{env.docker_password}}
    - name: Build Docker image
      run: |
-      docker build -t $DOCKER_IMAGE:${{github.sha}} .
-      docker tag $DOCKER_IMAGE:${{github.sha}} $DOCKER_IMAGE:latest
+         docker build -t $DOCKER_IMAGE:${{ github.sha }} .
+         docker tag $DOCKER_IMAGE:${{ github.sha }} $DOCKER_IMAGE:latest
