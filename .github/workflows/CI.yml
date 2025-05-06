@@ -13,7 +13,7 @@ jobs:
    docker_username: ${{secrets.DOCKERUSERNAME}}
    docker_password: ${{secrets.DOCKERPASSWORD}}
    DOCKER_IMAGE: karthikamn/flask-api-python-app
-   SONARHOSTURL: ${{secrets. SONARHOSTURL}}
+   SONARHOSTURL: ${{secrets.SONARHOSTURL}}
    SONARTOKEN: ${{secrets.SONARTOKEN}}
   steps:
    - name: Checkout
@@ -32,7 +32,7 @@ jobs:
      with:
        scanMetadataReportFile: .scannerwork/report-task.txt
        timeout-minutes: 5
-       SONARHOSTURL: ${{secrets. SONARHOSTURL}}
+       SONARHOSTURL: ${{secrets.SONARHOSTURL}}
        SONARTOKEN: ${{secrets.SONARTOKEN}}
       
      
