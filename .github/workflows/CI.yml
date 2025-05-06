@@ -26,7 +26,7 @@ jobs:
        -Dsonar.projectKey=my-projectkey
        -Dsonar.host.url=${{env.SONARHOSTURL}}
        -Dsonar.login=${{env.SONARTOKEN}}
-       -Dsonar.working.directory= ./.scannerwork
+       -Dsonar.working.directory=./.scannerwork
    - name: Docker login
      uses: docker/login-action@v2
      with:
