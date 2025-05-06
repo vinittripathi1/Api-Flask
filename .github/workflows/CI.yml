@@ -32,7 +32,7 @@ jobs:
      with:
           pollingTimeoutSec: 600
      env:
-          SONARTOKEN: ${{ env.SONARTOKEN }}
+          SONAR_TOKEN: ${{ env.SONARTOKEN }}
       
      
    - name: Docker login
