@@ -31,10 +31,7 @@ jobs:
      uses: SonarSource/sonarqube-quality-gate-action@v1.1.0
      with:
         scanMetadataReportFile: .scannerwork/report-task.txt
-        pollingTimeoutSec: 600
-     env:
-         SONARHOSTURL: ${{secrets. SONARHOSTURL}}
-         SONARTOKEN: ${{secrets.SONARTOKEN}}
+      
      
    - name: Docker login
      uses: docker/login-action@v2
