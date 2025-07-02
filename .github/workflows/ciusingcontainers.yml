@@ -6,7 +6,7 @@ on:
 env:
  DOCKER_USERNAME: ${{vars.DOCKER_NAME}}
  DOCKER_PASSWORD: ${{secrets.NEW_DOCKER_PASSWORD}}
- DOCKER_IMAGE: my-python-api-flask
+ DOCKER_IMAGE: karthikamn/my-python-api-flask
 jobs:
  build-using-docker:
   runs-on: ubuntu-latest
@@ -21,7 +21,7 @@ jobs:
    - name: Docker Build
      run: |
       docker build -t $DOCKER_IMAGE:${{github.sha}} .
-      docker tag  $DOCKER_IMAGE:${{github.sha}} $DOCKER_IMAGE:latest
+      docker tag $DOCKER_IMAGE:${{github.sha}} $DOCKER_IMAGE:latest
    - name: Push the Docker Image to Hub
      run: |
       docker push $DOCKER_IMAGE:${{ github.sha }}
