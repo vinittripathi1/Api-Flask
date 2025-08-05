@@ -2,9 +2,9 @@ name: CI/CD node Application
 
 on:
  push:
-  branches: [ "main", "develop" ]
+  branches: [ "main", "f1" ]
  pull_request:
-   branches: [ "main", "develop" ]
+   branches: [ "main", "f1" ]
  workflow_dispatch:
 
 jobs:
